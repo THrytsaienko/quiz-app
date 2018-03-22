@@ -1,0 +1,54 @@
+{
+	"questions": [{
+			"question": "How many languages and dialects are spoken by people all over the world?",
+			"answers": [{
+					"answer": "6,000"
+				},
+				{
+					"answer": "9,000"
+				},
+				{
+					"answer": "4,000"
+				},
+				{
+					"answer": "1,000"
+				}
+			],
+			"correct": "9,000"
+		},
+		{
+			"question": "The language with the richest vocabulary is: ",
+			"answers": [{
+					"answer": "Hindi"
+				},
+				{
+					"answer": "French"
+				},
+				{
+					"answer": "English"
+				},
+				{
+					"answer": "German"
+				}
+			],
+			"correct": "English"
+		},
+		{
+			"question": "Which book has been printed in the maximum number of languages and these scripts?",
+			"answers": [{
+					"answer": "The Bible"
+				},
+				{
+					"answer": "Hiraka Sutra"
+				},
+				{
+					"answer": "The Super Book"
+				},
+				{
+					"answer": "None of these "
+				}
+			],
+			"correct": "The Bible"
+		}
+	]
+}
