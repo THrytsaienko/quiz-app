@@ -14,10 +14,10 @@ html {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
 body {
-  min-height: 100vh;
   font-family: 'Montserrat', sans-serif;
   background: -webkit-gradient(linear, left top, right bottom, from(#200122), to(#6f0000));
   background: linear-gradient(to right bottom, #200122, #6f0000);
