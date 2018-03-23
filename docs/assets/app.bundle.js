@@ -9032,7 +9032,7 @@ var _http = __webpack_require__(329);
 var _ui = __webpack_require__(330);
 
 // Add event listeners
-document.addEventListener('DOMContentLoaded', getQuestions);
+// document.addEventListener('DOMContentLoaded', getQuestions);
 
 document.querySelector('.user-submit').addEventListener('click', submitUser);
 document.querySelector('#submit').addEventListener('click', submitAnswer);
@@ -9042,21 +9042,24 @@ document.querySelector('#restart').addEventListener('click', restartQuiz);
 var currentQuestionIndex = 1;
 var globalIndex = void 0;
 
-function getQuestions() {
-	_http.http.get('http://localhost:3000/questions').then(function (data) {
-		return _ui.ui.getQuestions(data);
+function getQuestions(numberQuestions, userName) {
+	_http.http.get('http://localhost:3000/questions?_limit=' + numberQuestions).then(function (data) {
+		return _ui.ui.getQuestions(data, userName, numberQuestions);
 	}).catch(function (err) {
 		return console.log(err);
 	});
 };
 
 function submitUser(e) {
+	var radioNumbers = document.querySelector('.numbers');
+	var numberQuestions = radioNumbers.querySelector('input[type=radio]:checked').value;
 	var userName = document.querySelector('.user-name').value;
+	console.log(numberQuestions);
+	console.log(userName);
 	if (userName.trim() === '') {
 		_ui.ui.showAlert('Please add your name!', 'alert alert-danger');
 	} else {
-		document.querySelector('.user-name').value = '';
-		_ui.ui.showQuestionBlock(userName);
+		getQuestions(numberQuestions, userName);
 		e.preventDefault();
 	}
 };
@@ -9067,7 +9070,8 @@ function submitAnswer(e) {
 }
 
 function submitNext(e) {
-	var answer = document.querySelector('input[type=radio]:checked').value;
+	var radioAnswer = document.querySelector('.answers');
+	var answer = radioAnswer.querySelector('input[type=radio]:checked').value;
 
 	var nextText = document.querySelector('#next').innerHTML;
 	if (nextText === 'Finish') {
@@ -9331,17 +9335,27 @@ var UI = function () {
 		this.questionsLeft = document.querySelector('.number-left');
 		this.card = document.querySelector('.card');
 		this.buttonGroup = document.querySelector('.btn-group');
+		this.numberQuestionsTotal = document.querySelector('.number-questions');
 		this.numberDone = document.querySelector('.number-done');
 		this.numberLeft = document.querySelector('.number-left');
+		this.numberQuestions = document.querySelector('.choose-questions');
+		this.questionsTotal = document.querySelector('.total');
 		this.questionsReceived = [];
 		this.userName;
 		this.answers = [];
-		this.total = 10;
+		this.total;
 		this.done = 0;
-		this.left;
+		this.left = 0;
 	}
 
 	_createClass(UI, [{
+		key: 'getQuestions',
+		value: function getQuestions(questions, userName, numberQuestions) {
+			this.questionsReceived = questions;
+			this.total = numberQuestions;
+			this.showQuestionBlock(userName);
+		}
+	}, {
 		key: 'showQuestionBlock',
 		value: function showQuestionBlock(userName) {
 			this.userName = userName;
@@ -9350,16 +9364,23 @@ var UI = function () {
 			this.card.style.display = "block";
 			this.buttonGroup.classList.remove('d-none');
 			this.buttonGroup.classList.add('d-flex');
+			this.numberQuestions.classList.add('d-none');
+			this.numberQuestions.classList.remove('d-flex');
+			this.questionsTotal.classList.remove('d-none');
 
 			var welcomeMessage = document.createElement('h3');
 			welcomeMessage.className = 'text-center welcome-message';
 			welcomeMessage.appendChild(document.createTextNode('Welcome to Quiz, ' + userName + '!'));
 			// Get parent
-			var parent = document.querySelector('.total');
+			// const parent = document.querySelector('.total');
+			// questionsTotal
 			// Get element before
 			var elBefore = document.querySelector('.total-info');
 			// Insert new element
-			parent.insertBefore(welcomeMessage, elBefore);
+			this.questionsTotal.insertBefore(welcomeMessage, elBefore);
+
+			this.numberQuestionsTotal.innerHTML = this.total;
+			this.numberLeft.innerHTML = this.total;
 
 			this.showQuestion(this.questionsReceived, 0);
 		}
@@ -9374,11 +9395,12 @@ var UI = function () {
 			alertMessage.appendChild(document.createTextNode(message));
 
 			// Get parent
-			var parent = document.querySelector('.total');
+			// const parent = document.querySelector('.total');
+			// this.questionsTotal
 			// Get element before
 			var elBefore = document.querySelector('.total-info');
 			// Insert new element
-			parent.insertBefore(alertMessage, elBefore);
+			this.questionsTotal.insertBefore(alertMessage, elBefore);
 
 			setTimeout(function () {
 				_this.clearAlert();
@@ -9394,11 +9416,6 @@ var UI = function () {
 			}
 		}
 	}, {
-		key: 'getQuestions',
-		value: function getQuestions(questions) {
-			this.questionsReceived = questions;
-		}
-	}, {
 		key: 'showNextQuestion',
 		value: function showNextQuestion(currentQuestionIndex) {
 			this.showQuestion(this.questionsReceived, currentQuestionIndex);
@@ -9411,7 +9428,7 @@ var UI = function () {
 			questions.filter(function (q, index) {
 				if (index === currentQuestionIndex) {
 					var num = index + 1;
-					return output = '\n\t\t\t\t<div class="card-header">\n\t\t\t\t\t<h5>Question\n\t\t\t\t\t<span class="current-question">' + num + '</span>\n\t\t\t\t\t</h5>\n\t\t\t\t</div>\n\t\t\t\t<div class="card-body">\n\t\t\t\t\t<h5 class="card-title question">' + q.question + '</h5>\n\t\t\t\t\t<div class="answers my-4">\n\t\t\t\t\t\t<div class="custom-control custom-radio custom-control-inline">\n\t\t\t\t\t\t\t<input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" value="' + q.answers[0].answer + '">\n\t\t\t\t\t\t\t<label class="custom-control-label" for="customRadioInline1">' + q.answers[0].answer + '</label>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class="custom-control custom-radio custom-control-inline">\n\t\t\t\t\t\t\t\t<input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" value="' + q.answers[1].answer + '">\n\t\t\t\t\t\t\t\t<label class="custom-control-label" for="customRadioInline2">' + q.answers[1].answer + '</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class="custom-control custom-radio custom-control-inline">\n\t\t\t\t\t\t\t\t<input type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input" value="' + q.answers[2].answer + '">\n\t\t\t\t\t\t\t\t<label class="custom-control-label" for="customRadioInline3">' + q.answers[2].answer + '</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class="custom-control custom-radio custom-control-inline">\n\t\t\t\t\t\t\t\t\t<input type="radio" id="customRadioInline4" name="customRadioInline1" class="custom-control-input" value="' + q.answers[3].answer + '">\n\t\t\t\t\t\t\t\t\t<label class="custom-control-label" for="customRadioInline4">' + q.answers[3].answer + '</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t';
+					return output = '\n\t\t\t\t<div class="card-header">\n\t\t\t\t\t<h5>Question\n\t\t\t\t\t<span class="current-question">' + num + '</span>\n\t\t\t\t\t</h5>\n\t\t\t\t</div>\n\t\t\t\t<div class="card-body">\n\t\t\t\t\t<h5 class="card-title question">' + q.question + '</h5>\n\t\t\t\t\t<div class="answers my-4">\n\t\t\t\t\t\t<div class="custom-control custom-radio custom-control-inline">\n\t\t\t\t\t\t\t<input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input answer" value="' + q.answers[0].answer + '">\n\t\t\t\t\t\t\t<label class="custom-control-label" for="customRadioInline1">' + q.answers[0].answer + '</label>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class="custom-control custom-radio custom-control-inline">\n\t\t\t\t\t\t\t\t<input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input answer" value="' + q.answers[1].answer + '">\n\t\t\t\t\t\t\t\t<label class="custom-control-label" for="customRadioInline2">' + q.answers[1].answer + '</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class="custom-control custom-radio custom-control-inline">\n\t\t\t\t\t\t\t\t<input type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input answer" value="' + q.answers[2].answer + '">\n\t\t\t\t\t\t\t\t<label class="custom-control-label" for="customRadioInline3">' + q.answers[2].answer + '</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class="custom-control custom-radio custom-control-inline">\n\t\t\t\t\t\t\t\t\t<input type="radio" id="customRadioInline4" name="customRadioInline1" class="custom-control-input answer" value="' + q.answers[3].answer + '">\n\t\t\t\t\t\t\t\t\t<label class="custom-control-label" for="customRadioInline4">' + q.answers[3].answer + '</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t';
 				}
 			});
 
@@ -9449,11 +9466,12 @@ var UI = function () {
 			congratulationMessage.className = 'text-center congratulation-message';
 			congratulationMessage.appendChild(document.createTextNode('Congratulations, ' + this.userName + '!'));
 			// Get parent
-			var parent = document.querySelector('.total');
+			// const parent = document.querySelector('.total');
+			// this.questionsTotal
 			// Get element before
 			var elBefore = document.querySelector('.total-info');
 			// Insert new element
-			parent.insertBefore(congratulationMessage, elBefore);
+			this.questionsTotal.insertBefore(congratulationMessage, elBefore);
 
 			this.submitButton.classList.add('d-none');
 			this.nextButton.classList.add('d-none');

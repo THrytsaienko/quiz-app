@@ -9,14 +9,23 @@ class UI {
 		this.questionsLeft = document.querySelector('.number-left');
 		this.card = document.querySelector('.card');
 		this.buttonGroup = document.querySelector('.btn-group');
+		this.numberQuestionsTotal = document.querySelector('.number-questions');
 		this.numberDone = document.querySelector('.number-done');
 		this.numberLeft = document.querySelector('.number-left');
+		this.numberQuestions = document.querySelector('.choose-questions');
+		this.questionsTotal = document.querySelector('.total');
 		this.questionsReceived = [];
 		this.userName;
 		this.answers = [];
-		this.total = 10;
+		this.total;
 		this.done = 0;
-		this.left;
+		this.left = 0;
+	}
+
+	getQuestions(questions, userName, numberQuestions) {
+		this.questionsReceived = questions;
+		this.total = numberQuestions;
+		this.showQuestionBlock(userName);
 	}
 
 	showQuestionBlock(userName) {
@@ -26,16 +35,23 @@ class UI {
 		this.card.style.display = "block";
 		this.buttonGroup.classList.remove('d-none');
 		this.buttonGroup.classList.add('d-flex');
+		this.numberQuestions.classList.add('d-none');
+		this.numberQuestions.classList.remove('d-flex');
+		this.questionsTotal.classList.remove('d-none');
 
 		const welcomeMessage = document.createElement('h3');
 		welcomeMessage.className = 'text-center welcome-message';
 		welcomeMessage.appendChild(document.createTextNode(`Welcome to Quiz, ${userName}!`));
 		// Get parent
-		const parent = document.querySelector('.total');
+		// const parent = document.querySelector('.total');
+		// questionsTotal
 		// Get element before
 		const elBefore = document.querySelector('.total-info');
 		// Insert new element
-		parent.insertBefore(welcomeMessage, elBefore);
+		this.questionsTotal.insertBefore(welcomeMessage, elBefore);
+
+		this.numberQuestionsTotal.innerHTML = this.total;
+		this.numberLeft.innerHTML = this.total;
 
 		this.showQuestion(this.questionsReceived, 0);
 	}
@@ -47,11 +63,12 @@ class UI {
 		alertMessage.appendChild(document.createTextNode(message));
 
 		// Get parent
-		const parent = document.querySelector('.total');
+		// const parent = document.querySelector('.total');
+		// this.questionsTotal
 		// Get element before
 		const elBefore = document.querySelector('.total-info');
 		// Insert new element
-		parent.insertBefore(alertMessage, elBefore);
+		this.questionsTotal.insertBefore(alertMessage, elBefore);
 
 		setTimeout(() => {
 			this.clearAlert();
@@ -64,10 +81,6 @@ class UI {
 		if (currentAlert) {
 			currentAlert.remove();
 		}
-	}
-
-	getQuestions(questions) {
-		this.questionsReceived = questions;
 	}
 
 	showNextQuestion(currentQuestionIndex) {
@@ -90,19 +103,19 @@ class UI {
 					<h5 class="card-title question">${q.question}</h5>
 					<div class="answers my-4">
 						<div class="custom-control custom-radio custom-control-inline">
-							<input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" value="${q.answers[0].answer}">
+							<input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input answer" value="${q.answers[0].answer}">
 							<label class="custom-control-label" for="customRadioInline1">${q.answers[0].answer}</label>
 						</div>
 							<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" value="${q.answers[1].answer}">
+								<input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input answer" value="${q.answers[1].answer}">
 								<label class="custom-control-label" for="customRadioInline2">${q.answers[1].answer}</label>
 							</div>
 								<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input" value="${q.answers[2].answer}">
+								<input type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input answer" value="${q.answers[2].answer}">
 								<label class="custom-control-label" for="customRadioInline3">${q.answers[2].answer}</label>
 							</div>
 								<div class="custom-control custom-radio custom-control-inline">
-									<input type="radio" id="customRadioInline4" name="customRadioInline1" class="custom-control-input" value="${q.answers[3].answer}">
+									<input type="radio" id="customRadioInline4" name="customRadioInline1" class="custom-control-input answer" value="${q.answers[3].answer}">
 									<label class="custom-control-label" for="customRadioInline4">${q.answers[3].answer}</label>
 							</div>
 					</div>
@@ -141,11 +154,12 @@ class UI {
 		congratulationMessage.className = 'text-center congratulation-message';
 		congratulationMessage.appendChild(document.createTextNode(`Congratulations, ${this.userName}!`));
 		// Get parent
-		const parent = document.querySelector('.total');
+		// const parent = document.querySelector('.total');
+		// this.questionsTotal
 		// Get element before
 		const elBefore = document.querySelector('.total-info');
 		// Insert new element
-		parent.insertBefore(congratulationMessage, elBefore);
+		this.questionsTotal.insertBefore(congratulationMessage, elBefore);
 
 		this.submitButton.classList.add('d-none');
 		this.nextButton.classList.add('d-none');

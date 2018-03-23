@@ -22,20 +22,37 @@
 			<h1 class="text-light my-5 text-center title">General Knowledge Multiple Choice Quiz</h1>
 		</header>
 
-		<div class="total">
+		<div class="total d-none">
 			<div class="total-info text-light my-5 d-flex justify-content-around">
 				<h4 class="total-info_questions">Total Questions:
-					<span>10</span>
+					<span class="number-questions"></span>
 				</h4>
 				<h4 class="total-info_done">Done:
 					<span class="number-done">0</span>
 				</h4>
 				<h4 class="total-info_left">Left:
-					<span class="number-left">10</span>
+					<span class="number-left"></span>
 				</h4>
 			</div>
 		</div>
 
+		<div class="input-group mb-3 choose-questions d-flex align-items-center justify-content-around text-light">
+			<h4>Choose Number of Questions in Quiz</h4>
+			<div class="my-4 numbers">
+				<div class="custom-control custom-radio custom-control-inline">
+					<input type="radio" id="number-questions1" name="number-questions" class="custom-control-input" value="2" checked>
+					<label class="custom-control-label" for="number-questions1">2</label>
+				</div>
+				<div class="custom-control custom-radio custom-control-inline">
+					<input type="radio" id="number-questions2" name="number-questions" class="custom-control-input" value="5">
+					<label class="custom-control-label" for="number-questions2">5</label>
+				</div>
+				<div class="custom-control custom-radio custom-control-inline">
+					<input type="radio" id="number-questions3" name="number-questions" class="custom-control-input" value="10">
+					<label class="custom-control-label" for="number-questions3">10</label>
+				</div>
+			</div>
+		</div>
 		<div class="input-group mb-3 user-info">
 			<input type="text" class="form-control mx-5 user-name" placeholder="Enter your name...">
 			<a href="#" class="btn btn-success mx-5 user-submit">Start Quiz</a>
@@ -54,6 +71,12 @@
 
 	</div>
 
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	    crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	    crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	    crossorigin="anonymous"></script>
 	<script src="assets/app.bundle.js"></script>
 </body>
 
