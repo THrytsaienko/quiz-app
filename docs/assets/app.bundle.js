@@ -9055,7 +9055,6 @@ function submitUser(e) {
 	if (userName.trim() === '') {
 		_ui.ui.showAlert('Please add your name!', 'alert alert-danger');
 	} else {
-		// console.log(document.querySelector('.user-name').value);
 		document.querySelector('.user-name').value = '';
 		_ui.ui.showQuestionBlock(userName);
 		e.preventDefault();
@@ -9064,35 +9063,33 @@ function submitUser(e) {
 
 function submitAnswer(e) {
 	_ui.ui.submitAnswer(globalIndex);
-	console.log(globalIndex);
 	e.preventDefault();
 }
 
 function submitNext(e) {
 	var answer = document.querySelector('input[type=radio]:checked').value;
-	// const radio = document.querySelectorAll('input[type=radio]');
-	// let	answer = Array.from(radio).forEach((input, index) => {
-	// 	if (input.checked) {
-	// 		console.log(typeof input);
-	// 		return index;
-	// 	}
-	// });
 
-	globalIndex = currentQuestionIndex;
-	_ui.ui.showNextQuestion(globalIndex);
-	_ui.ui.countAnswers(globalIndex, answer);
-	globalIndex = currentQuestionIndex++;
+	var nextText = document.querySelector('#next').innerHTML;
+	if (nextText === 'Finish') {
+		globalIndex = currentQuestionIndex++;
+		_ui.ui.countAnswers(globalIndex, answer);
+		_ui.ui.showResults();
+	} else {
+		globalIndex = currentQuestionIndex;
+		console.log(globalIndex);
+		_ui.ui.showNextQuestion(globalIndex);
+		_ui.ui.countAnswers(globalIndex, answer);
+		globalIndex = currentQuestionIndex++;
+	}
+
 	e.preventDefault();
 }
 
 function restartQuiz(e) {
 	var restartText = document.querySelector('#restart').innerHTML;
-	// console.log(restartText);
 	if (restartText === 'Restart') {
-		// console.log('Restart');
 		_ui.ui.showFinish();
 	} else {
-		// console.log('Not Restart');
 		_ui.ui.newQuiz();
 	}
 
@@ -9334,6 +9331,8 @@ var UI = function () {
 		this.questionsLeft = document.querySelector('.number-left');
 		this.card = document.querySelector('.card');
 		this.buttonGroup = document.querySelector('.btn-group');
+		this.numberDone = document.querySelector('.number-done');
+		this.numberLeft = document.querySelector('.number-left');
 		this.questionsReceived = [];
 		this.userName;
 		this.answers = [];
@@ -9374,7 +9373,6 @@ var UI = function () {
 			alertMessage.className = classes;
 			alertMessage.appendChild(document.createTextNode(message));
 
-			// Parent
 			// Get parent
 			var parent = document.querySelector('.total');
 			// Get element before
@@ -9410,7 +9408,6 @@ var UI = function () {
 		value: function showQuestion(questions, currentQuestionIndex) {
 			var output = '';
 
-			// console.log(questions);
 			questions.filter(function (q, index) {
 				if (index === currentQuestionIndex) {
 					var num = index + 1;
@@ -9426,7 +9423,7 @@ var UI = function () {
 		value: function submitAnswer(currentQuestionIndex) {
 			this.nextButton.classList.remove('disabled');
 			if (this.questionsReceived.length === currentQuestionIndex + 1) {
-				this.showResults();
+				this.nextButton.innerHTML = 'Finish';
 			}
 		}
 	}, {
@@ -9434,38 +9431,14 @@ var UI = function () {
 		value: function showFinish() {
 			if (confirm('Are you sure you want to restart quiz?')) {
 				this.newQuiz();
-				// this.userInfo.style.display = "flex";
-				// this.card.style.display = "none";
-				// this.buttonGroup.classList.remove('d-flex'); 
-				// this.buttonGroup.classList.add('d-none'); 
-				// document.querySelector('.welcome-message').style.display = "none";
 			} else {
-					// Do nothing!
-				}
+				// Do nothing!
+			}
 		}
 	}, {
 		key: 'newQuiz',
 		value: function newQuiz() {
 			location.reload();
-			// this.userInfo.style.display = "flex";
-			// this.card.style.display = "none";
-			// this.buttonGroup.classList.remove('d-flex');
-			// this.buttonGroup.classList.add('d-none');
-			// this.submitButton.classList.remove('d-none');
-			// this.nextButton.classList.remove('d-none');
-			// this.questionsDone.innerHTML = 0;
-			// this.questionsLeft.innerHTML = 10;
-			// this.restartButton.innerHTML = 'Restart';
-			// // this.restartButton.style.display = 'none';
-			// document.querySelector('.congratulation-message').style.display = "none";
-			// document.querySelector('.welcome-message').style.display = "none";
-			// // this.userInfo.style.display = "flex";
-			// // this.card.style.display = "none";
-			// // this.buttonGroup.classList.remove('d-flex');
-			// // this.buttonGroup.classList.add('d-none');
-			// // this.questionsDone.innerHTML = 0;
-			// // this.questionsLeft.innerHTML = 10;
-			// // document.querySelector('.congratulation-message').style.display = "none";
 		}
 	}, {
 		key: 'showResults',
@@ -9485,10 +9458,20 @@ var UI = function () {
 			this.submitButton.classList.add('d-none');
 			this.nextButton.classList.add('d-none');
 			this.restartButton.innerHTML = 'Try Again!';
-			this.questionsDone.innerHTML = '-';
-			this.questionsLeft.innerHTML = '-';
+			this.questionsDone.innerHTML = this.done;
+			this.questionsLeft.innerHTML = this.total - this.done;
 
-			this.questionsAll.innerHTML = '\n\t\t\t<div class="results my-5 d-flex justify-content-around">\n\t\t\t\t<h4 class="results_correct">Correct Answers:\n\t\t\t\t\t<span class="number-done">10</span>\n\t\t\t\t</h4>\n\t\t\t\t<h4 class="results__wrong">Wrong Answers:\n\t\t\t\t\t<span class="number-left">0</span>\n\t\t\t\t</h4>\n\t\t\t</div>\n\t\t';
+			var numberCorrect = 0;
+			var numberWrong = 0;
+			this.answers.forEach(function (answer) {
+				if (answer[0] === answer[1]) {
+					numberCorrect++;
+				} else {
+					numberWrong++;
+				}
+			});
+
+			this.questionsAll.innerHTML = '\n\t\t\t<div class="results my-5 d-flex justify-content-around">\n\t\t\t\t<h4 class="results_correct">Correct Answers:\n\t\t\t\t\t<span class="number-correct">' + numberCorrect + '</span>\n\t\t\t\t</h4>\n\t\t\t\t<h4 class="results__wrong">Wrong Answers:\n\t\t\t\t\t<span class="number-wrong">' + numberWrong + '</span>\n\t\t\t\t</h4>\n\t\t\t</div>\n\t\t';
 		}
 	}, {
 		key: 'countAnswers',
@@ -9507,8 +9490,8 @@ var UI = function () {
 			this.done = this.done + 1;
 			this.left = this.total - this.done;
 
-			console.log(this.done);
-			console.log(this.left);
+			this.numberDone.innerHTML = this.done;
+			this.numberLeft.innerHTML = this.left;
 		}
 	}]);
 

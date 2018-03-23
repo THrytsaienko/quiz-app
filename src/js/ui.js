@@ -9,6 +9,8 @@ class UI {
 		this.questionsLeft = document.querySelector('.number-left');
 		this.card = document.querySelector('.card');
 		this.buttonGroup = document.querySelector('.btn-group');
+		this.numberDone = document.querySelector('.number-done');
+		this.numberLeft = document.querySelector('.number-left');
 		this.questionsReceived = [];
 		this.userName;
 		this.answers = [];
@@ -44,7 +46,6 @@ class UI {
 		alertMessage.className = classes;
 		alertMessage.appendChild(document.createTextNode(message));
 
-		// Parent
 		// Get parent
 		const parent = document.querySelector('.total');
 		// Get element before
@@ -76,7 +77,6 @@ class UI {
 	showQuestion(questions, currentQuestionIndex) {
 		let output = '';
 
-		// console.log(questions);
 		questions.filter((q, index) => {
 			if (index === currentQuestionIndex) {
 				const num = index + 1;
@@ -118,18 +118,13 @@ class UI {
 	submitAnswer(currentQuestionIndex) {
 		this.nextButton.classList.remove('disabled');
 		if (this.questionsReceived.length === currentQuestionIndex + 1) {
-			this.showResults();
+			this.nextButton.innerHTML = 'Finish';
 		}
 	}
 
 	showFinish() {
 		if (confirm('Are you sure you want to restart quiz?')) {
 			this.newQuiz();
-			// this.userInfo.style.display = "flex";
-			// this.card.style.display = "none";
-			// this.buttonGroup.classList.remove('d-flex'); 
-			// this.buttonGroup.classList.add('d-none'); 
-			// document.querySelector('.welcome-message').style.display = "none";
 		} else {
 			// Do nothing!
 		}
@@ -137,25 +132,6 @@ class UI {
 
 	newQuiz() {
 		location.reload();
-		// this.userInfo.style.display = "flex";
-		// this.card.style.display = "none";
-		// this.buttonGroup.classList.remove('d-flex');
-		// this.buttonGroup.classList.add('d-none');
-		// this.submitButton.classList.remove('d-none');
-		// this.nextButton.classList.remove('d-none');
-		// this.questionsDone.innerHTML = 0;
-		// this.questionsLeft.innerHTML = 10;
-		// this.restartButton.innerHTML = 'Restart';
-		// // this.restartButton.style.display = 'none';
-		// document.querySelector('.congratulation-message').style.display = "none";
-		// document.querySelector('.welcome-message').style.display = "none";
-		// // this.userInfo.style.display = "flex";
-		// // this.card.style.display = "none";
-		// // this.buttonGroup.classList.remove('d-flex');
-		// // this.buttonGroup.classList.add('d-none');
-		// // this.questionsDone.innerHTML = 0;
-		// // this.questionsLeft.innerHTML = 10;
-		// // document.querySelector('.congratulation-message').style.display = "none";
 	}
 
 	showResults() {
@@ -174,26 +150,36 @@ class UI {
 		this.submitButton.classList.add('d-none');
 		this.nextButton.classList.add('d-none');
 		this.restartButton.innerHTML = 'Try Again!';        
-		this.questionsDone.innerHTML = '-';        
-		this.questionsLeft.innerHTML = '-';
+		this.questionsDone.innerHTML = this.done;        
+		this.questionsLeft.innerHTML = this.total - this.done;
+
+		let numberCorrect = 0;
+		let numberWrong = 0;
+		this.answers.forEach((answer) => {
+			if (answer[0] === answer[1]) {
+				numberCorrect++;
+			} else {
+				numberWrong++;
+			}
+		});
 
 		this.questionsAll.innerHTML = `
 			<div class="results my-5 d-flex justify-content-around">
 				<h4 class="results_correct">Correct Answers:
-					<span class="number-done">10</span>
+					<span class="number-correct">${numberCorrect}</span>
 				</h4>
 				<h4 class="results__wrong">Wrong Answers:
-					<span class="number-left">0</span>
+					<span class="number-wrong">${numberWrong}</span>
 				</h4>
 			</div>
 		`;
 	}
 
-	countAnswers(currentIndex, answer){
+	countAnswers(currentIndex, answer) {
 		let currentQuestion = [];
 		currentQuestion.push(answer);
 		this.questionsReceived.filter((q, index) => {
-			if (index === currentIndex-1){
+			if (index === currentIndex - 1) {
 				return currentQuestion.push(q.correct);
 			}
 		});
@@ -204,8 +190,8 @@ class UI {
 		this.done = this.done + 1;
 		this.left = this.total - this.done;
 
-		console.log(this.done);
-		console.log(this.left);
+		this.numberDone.innerHTML = this.done;
+		this.numberLeft.innerHTML = this.left;
 	}
 }
 

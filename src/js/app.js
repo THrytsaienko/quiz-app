@@ -28,7 +28,6 @@ function submitUser(e) {
 	if (userName.trim() === '') {
 		ui.showAlert('Please add your name!', 'alert alert-danger');
 	} else {
-		// console.log(document.querySelector('.user-name').value);
 		document.querySelector('.user-name').value = '';
 		ui.showQuestionBlock(userName);
 		e.preventDefault();
@@ -37,35 +36,33 @@ function submitUser(e) {
 
 function submitAnswer(e) {
 	ui.submitAnswer(globalIndex);
-	console.log(globalIndex);
 	e.preventDefault();
 }
 
 function submitNext(e) {
 	var answer = document.querySelector('input[type=radio]:checked').value;
-	// const radio = document.querySelectorAll('input[type=radio]');
-	// let	answer = Array.from(radio).forEach((input, index) => {
-	// 	if (input.checked) {
-	// 		console.log(typeof input);
-	// 		return index;
-	// 	}
-	// });
 
-	globalIndex = currentQuestionIndex;
-	ui.showNextQuestion(globalIndex);
-	ui.countAnswers(globalIndex, answer);
-	globalIndex = currentQuestionIndex++;
+	const nextText = document.querySelector('#next').innerHTML;
+	if (nextText === 'Finish') {
+		globalIndex = currentQuestionIndex++;
+		ui.countAnswers(globalIndex, answer);
+		ui.showResults();
+	} else {
+		globalIndex = currentQuestionIndex;
+		console.log(globalIndex);
+		ui.showNextQuestion(globalIndex);
+		ui.countAnswers(globalIndex, answer);
+		globalIndex = currentQuestionIndex++;
+	}
+	
 	e.preventDefault();
 }
 
 function restartQuiz(e) {
 	const restartText = document.querySelector('#restart').innerHTML;
-	// console.log(restartText);
 	if (restartText === 'Restart') {
-		// console.log('Restart');
 		ui.showFinish();
 	} else {
-		// console.log('Not Restart');
 		ui.newQuiz();
 	}
 

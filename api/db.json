@@ -17,7 +17,7 @@
 			"correct": "9,000"
 		},
 		{
-			"question": "The language with the richest vocabulary is: ",
+			"question": "The language with the richest vocabulary is:",
 			"answers": [{
 					"answer": "Hindi"
 				},
@@ -45,10 +45,129 @@
 					"answer": "The Super Book"
 				},
 				{
-					"answer": "None of these "
+					"answer": "None of these"
 				}
 			],
 			"correct": "The Bible"
+		},
+		{
+			"question": "Euclid was:",
+			"answers": [{
+					"answer": "Greek mathematician"
+				},
+				{
+					"answer": "Contributor to the use of deductive principles of logic as the basis of geometry"
+				},
+				{
+					"answer": "Propounded the geometrical theosems"
+				},
+				{
+					"answer": "All the statements are correct"
+				}
+			],
+			"correct": "All the statements are correct"
+		},
+		{
+			"question": "Who is known as the father of English poetry?",
+			"answers": [{
+					"answer": "Geoffrey Chaucer"
+				},
+				{
+					"answer": "John Milton"
+				},
+				{
+					"answer": "John Keats"
+				},
+				{
+					"answer": "None of these"
+				}
+			],
+			"correct": "Geoffrey Chaucer"
+		},
+		{
+			"question": "The American General who led the revolt against the British & declared American independence was:",
+			"answers": [{
+					"answer": "George Washington"
+				},
+				{
+					"answer": "Bill Clinton"
+				},
+				{
+					"answer": "George Bush"
+				},
+				{
+					"answer": "None of these"
+				}
+			],
+			"correct": "George Washington"
+		},
+		{
+			"question": "Marco Polo",
+			"answers": [{
+					"answer": "Discovered Greenland"
+				},
+				{
+					"answer": "Traveled three China, India and other parts of Asia"
+				},
+				{
+					"answer": "Traveled round the cape of Good Hope"
+				},
+				{
+					"answer": "Discovered Canada"
+				}
+			],
+			"correct": "Traveled three China, India and other parts of Asia"
+		},
+		{
+			"question": "Badminton is the national sport at:",
+			"answers": [{
+					"answer": "Malaysia"
+				},
+				{
+					"answer": "Scotland"
+				},
+				{
+					"answer": "China"
+				},
+				{
+					"answer": "Former soviet Union"
+				}
+			],
+			"correct": "Malaysia"
+		},
+		{
+			"question": "For which of the following disciplines in Nobel Prize awarded?",
+			"answers": [{
+					"answer": "Physics and chemistry"
+				},
+				{
+					"answer": "Physiology or Medicine"
+				},
+				{
+					"answer": "Literature, Peace and Economics"
+				},
+				{
+					"answer": "All the above"
+				}
+			],
+			"correct": "All the above"
+		},
+		{
+			"question": "The oldest printed work in the world, which dates back to AD 868 is:",
+			"answers": [{
+					"answer": "The Bible"
+				},
+				{
+					"answer": "The Hirake Sutra"
+				},
+				{
+					"answer": "The Ramayana"
+				},
+				{
+					"answer": "The Mahabharata"
+				}
+			],
+			"correct": "The Hirake Sutra"
 		}
 	]
 }
