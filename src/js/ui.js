@@ -63,12 +63,11 @@ class UI {
 		alertMessage.appendChild(document.createTextNode(message));
 
 		// Get parent
-		// const parent = document.querySelector('.total');
-		// this.questionsTotal
+		const parent = document.querySelector('.choose-questions');
 		// Get element before
-		const elBefore = document.querySelector('.total-info');
+		const elBefore = document.querySelector('.numbers');
 		// Insert new element
-		this.questionsTotal.insertBefore(alertMessage, elBefore);
+		parent.insertBefore(alertMessage, elBefore);
 
 		setTimeout(() => {
 			this.clearAlert();

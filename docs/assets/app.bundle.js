@@ -9395,12 +9395,11 @@ var UI = function () {
 			alertMessage.appendChild(document.createTextNode(message));
 
 			// Get parent
-			// const parent = document.querySelector('.total');
-			// this.questionsTotal
+			var parent = document.querySelector('.choose-questions');
 			// Get element before
-			var elBefore = document.querySelector('.total-info');
+			var elBefore = document.querySelector('.numbers');
 			// Insert new element
-			this.questionsTotal.insertBefore(alertMessage, elBefore);
+			parent.insertBefore(alertMessage, elBefore);
 
 			setTimeout(function () {
 				_this.clearAlert();

@@ -168,6 +168,91 @@
 				}
 			],
 			"correct": "The Hirake Sutra"
+		},
+		{
+			"question": "How many people speak Chinese language?",
+			"answers": [{
+					"answer": "1 billion"
+				},
+				{
+					"answer": "1 million"
+				},
+				{
+					"answer": "1 lakh"
+				},
+				{
+					"answer": "1 thousand"
+				}
+			],
+			"correct": "1 billion"
+		},
+		{
+			"question": "The largest book, the super book, is ?? and weight is ??",
+			"answers": [{
+					"answer": "270 cm, 300 cm, 252 kg"
+				},
+				{
+					"answer": "100 cm, 110 cm, 100 kg"
+				},
+				{
+					"answer": "200 cm, 100 cm, 60 kg"
+				},
+				{
+					"answer": "None of these"
+				}
+			],
+			"correct": "270 cm, 300 cm, 252 kg"
+		},
+		{
+			"question": "The author of the book 'Time machine' is:",
+			"answers": [{
+					"answer": "Lewis Carroll"
+				},
+				{
+					"answer": "Robert Louis Stevenson"
+				},
+				{
+					"answer": "Charles Lamb"
+				},
+				{
+					"answer": "H.G. Wells"
+				}
+			],
+			"correct": "H.G. Wells"
+		},
+		{
+			"question": "Galileo was an I talian astronomer who:",
+			"answers": [{
+					"answer": "Developed the telescope"
+				},
+				{
+					"answer": "Discovered 4 satellites of Jupiter"
+				},
+				{
+					"answer": "Discovered that the movement o f the pendulum produces a regular time measurement"
+				},
+				{
+					"answer": "All are correct"
+				}
+			],
+			"correct": "All are correct"
+		},
+		{
+			"question": "Who landed on the mainland of South America for the First time?",
+			"answers": [{
+					"answer": "Discovered Greenland"
+				},
+				{
+					"answer": "Landed on the mainland of south America"
+				},
+				{
+					"answer": "Discovered the sea route from Europe to India"
+				},
+				{
+					"answer": "None of these"
+				}
+			],
+			"correct": "Landed on the mainland of south America"
 		}
 	]
 }
