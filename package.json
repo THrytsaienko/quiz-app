@@ -7,8 +7,7 @@
 		"start": "gulp",
 		"build": "gulp build",
 		"dev-server-2": "webpack-dev-server --output-public-path=/docs/",
-		"dev-server": "webpack-dev-server",
-		"json:server": "json-server --watch api/db.json"
+		"dev-server": "webpack-dev-server"
 	},
 	"author": "",
 	"license": "ISC",
@@ -30,7 +29,5 @@
 		"webpack-dev-server": "^2.9.4",
 		"webpack-stream": "^4.0.2"
 	},
-	"dependencies": {
-		"json-server": "^0.12.1"
-	}
+	"dependencies": {}
 }

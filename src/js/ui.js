@@ -22,7 +22,7 @@ class UI {
 		this.left = 0;
 	}
 
-	getQuestions(questions, userName, numberQuestions) {
+	getQuestions(questions, userName = this.userName, numberQuestions) {
 		this.questionsReceived = questions;
 		this.total = numberQuestions;
 		this.showQuestionBlock(userName);
