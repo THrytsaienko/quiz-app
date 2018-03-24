@@ -22,13 +22,15 @@ class UI {
 		this.left = 0;
 	}
 
-	getQuestions(questions, userName = this.userName, numberQuestions) {
+	// getQuestions(questions, userName = this.userName, numberQuestions) {
+	// 	this.questionsReceived = questions;
+	// 	this.total = numberQuestions;
+	// 	this.showQuestionBlock(userName);
+	// }
+
+	showQuestionBlock(questions, userName, numberQuestions) {
 		this.questionsReceived = questions;
 		this.total = numberQuestions;
-		this.showQuestionBlock(userName);
-	}
-
-	showQuestionBlock(userName) {
 		this.userName = userName;
 
 		this.userInfo.style.display = "none";
@@ -102,20 +104,20 @@ class UI {
 					<h5 class="card-title question">${q.question}</h5>
 					<div class="answers my-4">
 						<div class="custom-control custom-radio custom-control-inline">
-							<input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input answer" value="${q.answers[0].answer}">
-							<label class="custom-control-label" for="customRadioInline1">${q.answers[0].answer}</label>
+							<input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input answer" value="${q.answers[0]}">
+							<label class="custom-control-label" for="customRadioInline1">${q.answers[0]}</label>
 						</div>
 							<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input answer" value="${q.answers[1].answer}">
-								<label class="custom-control-label" for="customRadioInline2">${q.answers[1].answer}</label>
+								<input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input answer" value="${q.answers[1]}">
+								<label class="custom-control-label" for="customRadioInline2">${q.answers[1]}</label>
 							</div>
 								<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input answer" value="${q.answers[2].answer}">
-								<label class="custom-control-label" for="customRadioInline3">${q.answers[2].answer}</label>
+								<input type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input answer" value="${q.answers[2]}">
+								<label class="custom-control-label" for="customRadioInline3">${q.answers[2]}</label>
 							</div>
 								<div class="custom-control custom-radio custom-control-inline">
-									<input type="radio" id="customRadioInline4" name="customRadioInline1" class="custom-control-input answer" value="${q.answers[3].answer}">
-									<label class="custom-control-label" for="customRadioInline4">${q.answers[3].answer}</label>
+									<input type="radio" id="customRadioInline4" name="customRadioInline1" class="custom-control-input answer" value="${q.answers[3]}">
+									<label class="custom-control-label" for="customRadioInline4">${q.answers[3]}</label>
 							</div>
 					</div>
 				</div>

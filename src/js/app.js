@@ -92,8 +92,6 @@ document.querySelector('#restart').addEventListener('click', restartQuiz);
 let currentQuestionIndex = 1;
 let globalIndex;
 let questionsCurrentQuiz = [];
-let userName;
-let numberQuestions;
 
 function getQuestion(randomNumber) {
 	questionsCurrentQuiz = allQuestions.filter((q, index) => {
@@ -114,7 +112,7 @@ function getQuestion(randomNumber) {
 		}
 	});
 
-	ui.getQuestions(questionsCurrentQuiz, userName, numberQuestions);
+
 
 	console.log(questionsCurrentQuiz);
 
@@ -125,14 +123,14 @@ function getQuestion(randomNumber) {
 
 function submitUser(e) {
 	let radioNumbers = document.querySelector('.numbers');
-	numberQuestions = radioNumbers.querySelector('input[type=radio]:checked').value;
-	userName = document.querySelector('.user-name').value;
+	let numberQuestions = radioNumbers.querySelector('input[type=radio]:checked').value;
+	const userName = document.querySelector('.user-name').value;
 
 	if (userName.trim() === '') {
 		ui.showAlert('Please add your name!', 'alert alert-danger');
 	} else {
 		// getQuestions(numberQuestions, userName);
-		getRandomNumber();
+		getRandomNumber(userName);
 		e.preventDefault();
 	}
 };

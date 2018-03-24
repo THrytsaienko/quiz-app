@@ -9102,8 +9102,6 @@ document.querySelector('#restart').addEventListener('click', restartQuiz);
 var currentQuestionIndex = 1;
 var globalIndex = void 0;
 var questionsCurrentQuiz = [];
-var userName = void 0;
-var numberQuestions = void 0;
 
 function getQuestion(randomNumber) {
 	questionsCurrentQuiz = allQuestions.filter(function (q, index) {
@@ -9124,8 +9122,6 @@ function getQuestion(randomNumber) {
 		}
 	});
 
-	_ui.ui.getQuestions(questionsCurrentQuiz, userName, numberQuestions);
-
 	console.log(questionsCurrentQuiz);
 
 	// http.get('http://localhost:3000/questions?_limit=' + numberQuestions)
@@ -9135,14 +9131,14 @@ function getQuestion(randomNumber) {
 
 function submitUser(e) {
 	var radioNumbers = document.querySelector('.numbers');
-	numberQuestions = radioNumbers.querySelector('input[type=radio]:checked').value;
-	userName = document.querySelector('.user-name').value;
+	var numberQuestions = radioNumbers.querySelector('input[type=radio]:checked').value;
+	var userName = document.querySelector('.user-name').value;
 
 	if (userName.trim() === '') {
 		_ui.ui.showAlert('Please add your name!', 'alert alert-danger');
 	} else {
 		// getQuestions(numberQuestions, userName);
-		getRandomNumber();
+		getRandomNumber(userName);
 		e.preventDefault();
 	}
 };
@@ -9230,19 +9226,17 @@ var UI = function () {
 		this.left = 0;
 	}
 
-	_createClass(UI, [{
-		key: 'getQuestions',
-		value: function getQuestions(questions) {
-			var userName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.userName;
-			var numberQuestions = arguments[2];
+	// getQuestions(questions, userName = this.userName, numberQuestions) {
+	// 	this.questionsReceived = questions;
+	// 	this.total = numberQuestions;
+	// 	this.showQuestionBlock(userName);
+	// }
 
+	_createClass(UI, [{
+		key: 'showQuestionBlock',
+		value: function showQuestionBlock(questions, userName, numberQuestions) {
 			this.questionsReceived = questions;
 			this.total = numberQuestions;
-			this.showQuestionBlock(userName);
-		}
-	}, {
-		key: 'showQuestionBlock',
-		value: function showQuestionBlock(userName) {
 			this.userName = userName;
 
 			this.userInfo.style.display = "none";
@@ -9312,7 +9306,7 @@ var UI = function () {
 			questions.filter(function (q, index) {
 				if (index === currentQuestionIndex) {
 					var num = index + 1;
-					return output = '\n\t\t\t\t<div class="card-header">\n\t\t\t\t\t<h5>Question\n\t\t\t\t\t<span class="current-question">' + num + '</span>\n\t\t\t\t\t</h5>\n\t\t\t\t</div>\n\t\t\t\t<div class="card-body">\n\t\t\t\t\t<h5 class="card-title question">' + q.question + '</h5>\n\t\t\t\t\t<div class="answers my-4">\n\t\t\t\t\t\t<div class="custom-control custom-radio custom-control-inline">\n\t\t\t\t\t\t\t<input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input answer" value="' + q.answers[0].answer + '">\n\t\t\t\t\t\t\t<label class="custom-control-label" for="customRadioInline1">' + q.answers[0].answer + '</label>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class="custom-control custom-radio custom-control-inline">\n\t\t\t\t\t\t\t\t<input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input answer" value="' + q.answers[1].answer + '">\n\t\t\t\t\t\t\t\t<label class="custom-control-label" for="customRadioInline2">' + q.answers[1].answer + '</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class="custom-control custom-radio custom-control-inline">\n\t\t\t\t\t\t\t\t<input type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input answer" value="' + q.answers[2].answer + '">\n\t\t\t\t\t\t\t\t<label class="custom-control-label" for="customRadioInline3">' + q.answers[2].answer + '</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class="custom-control custom-radio custom-control-inline">\n\t\t\t\t\t\t\t\t\t<input type="radio" id="customRadioInline4" name="customRadioInline1" class="custom-control-input answer" value="' + q.answers[3].answer + '">\n\t\t\t\t\t\t\t\t\t<label class="custom-control-label" for="customRadioInline4">' + q.answers[3].answer + '</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t';
+					return output = '\n\t\t\t\t<div class="card-header">\n\t\t\t\t\t<h5>Question\n\t\t\t\t\t<span class="current-question">' + num + '</span>\n\t\t\t\t\t</h5>\n\t\t\t\t</div>\n\t\t\t\t<div class="card-body">\n\t\t\t\t\t<h5 class="card-title question">' + q.question + '</h5>\n\t\t\t\t\t<div class="answers my-4">\n\t\t\t\t\t\t<div class="custom-control custom-radio custom-control-inline">\n\t\t\t\t\t\t\t<input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input answer" value="' + q.answers[0] + '">\n\t\t\t\t\t\t\t<label class="custom-control-label" for="customRadioInline1">' + q.answers[0] + '</label>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class="custom-control custom-radio custom-control-inline">\n\t\t\t\t\t\t\t\t<input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input answer" value="' + q.answers[1] + '">\n\t\t\t\t\t\t\t\t<label class="custom-control-label" for="customRadioInline2">' + q.answers[1] + '</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class="custom-control custom-radio custom-control-inline">\n\t\t\t\t\t\t\t\t<input type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input answer" value="' + q.answers[2] + '">\n\t\t\t\t\t\t\t\t<label class="custom-control-label" for="customRadioInline3">' + q.answers[2] + '</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class="custom-control custom-radio custom-control-inline">\n\t\t\t\t\t\t\t\t\t<input type="radio" id="customRadioInline4" name="customRadioInline1" class="custom-control-input answer" value="' + q.answers[3] + '">\n\t\t\t\t\t\t\t\t\t<label class="custom-control-label" for="customRadioInline4">' + q.answers[3] + '</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t';
 				}
 			});
 
