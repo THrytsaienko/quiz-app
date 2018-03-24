@@ -20,7 +20,6 @@ gulp.task('sass', function () {
 	return gulp.src('./src/sass/*.sass')
 		.pipe(sass.sync().on('error', sass.logError))
 		.pipe(postcss(processors))
-		.pipe(gcmq())
 		.pipe(rename('styles.css'))
 		.pipe(gulp.dest('./docs/assets'))
 		.pipe(browserSync.stream())
