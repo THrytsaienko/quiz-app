@@ -96,20 +96,20 @@ class UI {
 					<h5 class="card-title question">${q.question}</h5>
 					<div class="answers my-4">
 						<div class="custom-control custom-radio custom-control-inline">
-							<input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input answer" value="${q.answers[0]}" checked>
-							<label class="custom-control-label" for="customRadioInline1">${q.answers[0]}</label>
+							<input type="radio" id="radioAnswer1" name="radioAnswer" class="custom-control-input answer" value="${q.answers[0]}" checked>
+							<label class="custom-control-label" for="radioAnswer1">${q.answers[0]}</label>
 						</div>
 							<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input answer" value="${q.answers[1]}">
-								<label class="custom-control-label" for="customRadioInline2">${q.answers[1]}</label>
+								<input type="radio" id="radioAnswer2" name="radioAnswer" class="custom-control-input answer" value="${q.answers[1]}">
+								<label class="custom-control-label" for="radioAnswer2">${q.answers[1]}</label>
 							</div>
 								<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input answer" value="${q.answers[2]}">
-								<label class="custom-control-label" for="customRadioInline3">${q.answers[2]}</label>
+								<input type="radio" id="radioAnswer3" name="radioAnswer" class="custom-control-input answer" value="${q.answers[2]}">
+								<label class="custom-control-label" for="radioAnswer3">${q.answers[2]}</label>
 							</div>
 								<div class="custom-control custom-radio custom-control-inline">
-									<input type="radio" id="customRadioInline4" name="customRadioInline1" class="custom-control-input answer" value="${q.answers[3]}">
-									<label class="custom-control-label" for="customRadioInline4">${q.answers[3]}</label>
+									<input type="radio" id="radioAnswer4" name="radioAnswer" class="custom-control-input answer" value="${q.answers[3]}">
+									<label class="custom-control-label" for="radioAnswer4">${q.answers[3]}</label>
 							</div>
 					</div>
 				</div>

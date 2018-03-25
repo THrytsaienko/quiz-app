@@ -73,9 +73,9 @@ const allQuestions = [{
 		correct: "All are correct"
 	},
 	{
-		question: "Who landed on the mainland of South America for the First time?",
-		answers: ["Discovered Greenland", "Landed on the mainland of south America", "Discovered the sea route from Europe to India", "None of these"],
-		correct: "Landed on the mainland of south America"
+		question: "Who was first to sail sound the strait, reached the Philippines and named the Pacific Ocean?",
+		answers: ["Ferdinand Magelion", "Jacques Carter", "William Janszoom", "Vasco da Gama"],
+		correct: "Ferdinand Magelion"
 	}
 ]
 
