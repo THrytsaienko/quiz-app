@@ -58,7 +58,7 @@ gulp.task('copy', function(){
 });
 
 gulp.task('clean', function() {
-	return del('./docs');
+	return del('docs');
 });
 
 gulp.task('build', gulp.parallel('html', 'sass', 'copy'));

@@ -19,6 +19,7 @@
 		"babel-preset-env": "^1.6.1",
 		"babel-preset-stage-0": "^6.24.1",
 		"browser-sync": "^2.19.0",
+		"gulp-group-css-media-queries": "^1.2.0",
 		"del": "^3.0.0",
 		"gulp": "github:gulpjs/gulp#4.0",
 		"gulp-postcss": "^7.0.0",

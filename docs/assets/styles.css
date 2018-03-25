@@ -22,6 +22,9 @@ body {
 .title {
   font-family: 'Merienda', cursive;
   font-weight: 700; }
+  @media (max-width: 575.98px) {
+    .title {
+      font-size: 26px; } }
 
 .btn {
   border-radius: 3px; }
@@ -31,3 +34,12 @@ body {
 
 .welcome-message, .congratulation-message {
   color: yellowgreen; }
+
+@media (max-width: 575.98px) {
+  .total-info,
+  .numbers-title {
+    font-size: 18px; } }
+
+@media (max-width: 575.98px) {
+  .total-info h4 {
+    font-size: 20px; } }

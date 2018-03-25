@@ -24,20 +24,20 @@
 
 		<div class="total d-none">
 			<div class="total-info text-light my-5 d-flex justify-content-around">
-				<h4 class="total-info_questions">Total Questions:
+				<h4 class="total-info_questions text-center">Total Questions:
 					<span class="number-questions"></span>
 				</h4>
-				<h4 class="total-info_done">Done:
+				<h4 class="total-info_done text-center">Done:
 					<span class="number-done">0</span>
 				</h4>
-				<h4 class="total-info_left">Left:
+				<h4 class="total-info_left text-center">Left:
 					<span class="number-left"></span>
 				</h4>
 			</div>
 		</div>
 
 		<div class="input-group mb-3 choose-questions d-flex justify-content-center">
-			<div class="input-group numbers d-flex align-items-center justify-content-around text-light">
+			<div class="input-group numbers d-flex align-items-center justify-content-around text-light text-center">
 				<h4 class="numbers-title">Choose Number of Questions in Quiz</h4>
 				<div class="my-4">
 					<div class="custom-control custom-radio custom-control-inline">
@@ -57,10 +57,10 @@
 
 		</div>
 
-		<div class="input-group mb-3 user-info">
-			<input type="text" class="form-control mx-5 user-name" placeholder="Enter your name...">
-			<a href="#" class="btn btn-success mx-5 user-submit">Start Quiz</a>
-		</div>
+		<form class="form-inline mb-3 justify-content-center user-info">
+			<input type="text" class="form-control user-name mb-3 mb-sm-0 mr-sm-5" placeholder="Enter your name...">
+			<a href="#" class="btn btn-success user-submit">Start Quiz</a>
+		</form>
 
 		<div class="card text-center">
 			<div id="questionsAll"></div>
