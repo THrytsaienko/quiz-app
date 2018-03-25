@@ -89,60 +89,65 @@ document.querySelector('#next').addEventListener('click', submitNext);
 document.querySelector('#restart').addEventListener('click', restartQuiz);
 
 
-let currentQuestionIndex = 1;
-let globalIndex;
+let currentQuestionIndex = 0;
+let questionCount;
 let questionsCurrentQuiz = [];
+let numberQuestions;
+let userName;
+let randomQuestion;
 
-function getQuestion(randomNumber) {
-	questionsCurrentQuiz = allQuestions.filter((q, index) => {
-		if (questionsCurrentQuiz.length === 0){
-			if (index === randomNumber){
+function getQuestion(questionCount) {
+	randomQuestion = getRandomQuestion();
+
+	if (questionsCurrentQuiz.length === 0) {
+		allQuestions.filter((q, index) => {
+			if (index === randomQuestion) {
+				ui.showQuestionBlock(userName, numberQuestions);
 				q.currentIndex = index;
-				return q;
+				questionsCurrentQuiz.push(q);
 			}
-		} else {
-			if (questionsCurrentQuiz.indexOf(randomNumber) === -1){
-				if (index === randomNumber) {
+			ui.showQuestion(questionsCurrentQuiz, 0);
+		});
+	} else if (questionsCurrentQuiz.length > 0) {
+		let errorArray = questionsCurrentQuiz.filter((item) => {
+			if (item.currentIndex === randomQuestion) {
+				return 1;
+			}
+		});
+		if (errorArray.length === 0) {
+			allQuestions.filter((q, index) => {
+				if (index === randomQuestion) {
 					q.currentIndex = index;
-					return q;
+					// console.log(q);
+					questionsCurrentQuiz.push(q);
 				}
-			} else {
-				getRandomNumber();
-			}
+				ui.showQuestion(questionsCurrentQuiz, questionCount);
+			});
+		} else {
+			getQuestion(questionCount);
 		}
-	});
-
-
-
-	console.log(questionsCurrentQuiz);
-
-	// http.get('http://localhost:3000/questions?_limit=' + numberQuestions)
-	// 	.then(data => ui.getQuestions(data, userName, numberQuestions))
-	// 	.catch(err => console.log(err));
+	};
 };
 
 function submitUser(e) {
 	let radioNumbers = document.querySelector('.numbers');
-	let numberQuestions = radioNumbers.querySelector('input[type=radio]:checked').value;
-	const userName = document.querySelector('.user-name').value;
+	numberQuestions = radioNumbers.querySelector('input[type=radio]:checked').value;
+	userName = document.querySelector('.user-name').value;
 
 	if (userName.trim() === '') {
 		ui.showAlert('Please add your name!', 'alert alert-danger');
 	} else {
-		// getQuestions(numberQuestions, userName);
-		getRandomNumber(userName);
+		getQuestion(0);
 		e.preventDefault();
 	}
 };
 
-function getRandomNumber() {
-	let randomNumber = Math.floor(Math.random() * 15);
-	getQuestion(randomNumber);
-	console.log(randomNumber);
+function getRandomQuestion() {
+	return Math.floor(Math.random() * 15);
 }
 
 function submitAnswer(e) {
-	ui.submitAnswer(globalIndex);
+	ui.submitAnswer(questionCount);
 	e.preventDefault();
 }
 
@@ -151,17 +156,17 @@ function submitNext(e) {
 	let answer = radioAnswer.querySelector('input[type=radio]:checked').value;
 
 	const nextText = document.querySelector('#next').innerHTML;
-	if (nextText === 'Finish') {
-		globalIndex = currentQuestionIndex++;
-		ui.countAnswers(globalIndex, answer);
+
+	currentQuestionIndex = currentQuestionIndex + 1;
+	questionCount = currentQuestionIndex;
+	if (questionCount === Number(numberQuestions)) {
+		ui.countAnswers(questionCount, answer);
 		ui.showResults();
 	} else {
-		globalIndex = currentQuestionIndex;
-		console.log(globalIndex);
-		ui.showNextQuestion(globalIndex);
-		ui.countAnswers(globalIndex, answer);
-		globalIndex = currentQuestionIndex++;
+		ui.countAnswers(questionCount, answer);
+		getQuestion(questionCount);
 	}
+
 
 	e.preventDefault();
 }

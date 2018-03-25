@@ -9099,58 +9099,65 @@ document.querySelector('#submit').addEventListener('click', submitAnswer);
 document.querySelector('#next').addEventListener('click', submitNext);
 document.querySelector('#restart').addEventListener('click', restartQuiz);
 
-var currentQuestionIndex = 1;
-var globalIndex = void 0;
+var currentQuestionIndex = 0;
+var questionCount = void 0;
 var questionsCurrentQuiz = [];
+var numberQuestions = void 0;
+var userName = void 0;
+var randomQuestion = void 0;
 
-function getQuestion(randomNumber) {
-	questionsCurrentQuiz = allQuestions.filter(function (q, index) {
-		if (questionsCurrentQuiz.length === 0) {
-			if (index === randomNumber) {
+function getQuestion(questionCount) {
+	randomQuestion = getRandomQuestion();
+
+	if (questionsCurrentQuiz.length === 0) {
+		allQuestions.filter(function (q, index) {
+			if (index === randomQuestion) {
+				_ui.ui.showQuestionBlock(userName, numberQuestions);
 				q.currentIndex = index;
-				return q;
+				questionsCurrentQuiz.push(q);
 			}
-		} else {
-			if (questionsCurrentQuiz.indexOf(randomNumber) === -1) {
-				if (index === randomNumber) {
+			_ui.ui.showQuestion(questionsCurrentQuiz, 0);
+		});
+	} else if (questionsCurrentQuiz.length > 0) {
+		var errorArray = questionsCurrentQuiz.filter(function (item) {
+			if (item.currentIndex === randomQuestion) {
+				return 1;
+			}
+		});
+		if (errorArray.length === 0) {
+			allQuestions.filter(function (q, index) {
+				if (index === randomQuestion) {
 					q.currentIndex = index;
-					return q;
+					// console.log(q);
+					questionsCurrentQuiz.push(q);
 				}
-			} else {
-				getRandomNumber();
-			}
+				_ui.ui.showQuestion(questionsCurrentQuiz, questionCount);
+			});
+		} else {
+			getQuestion(questionCount);
 		}
-	});
-
-	console.log(questionsCurrentQuiz);
-
-	// http.get('http://localhost:3000/questions?_limit=' + numberQuestions)
-	// 	.then(data => ui.getQuestions(data, userName, numberQuestions))
-	// 	.catch(err => console.log(err));
+	};
 };
 
 function submitUser(e) {
 	var radioNumbers = document.querySelector('.numbers');
-	var numberQuestions = radioNumbers.querySelector('input[type=radio]:checked').value;
-	var userName = document.querySelector('.user-name').value;
+	numberQuestions = radioNumbers.querySelector('input[type=radio]:checked').value;
+	userName = document.querySelector('.user-name').value;
 
 	if (userName.trim() === '') {
 		_ui.ui.showAlert('Please add your name!', 'alert alert-danger');
 	} else {
-		// getQuestions(numberQuestions, userName);
-		getRandomNumber(userName);
+		getQuestion(0);
 		e.preventDefault();
 	}
 };
 
-function getRandomNumber() {
-	var randomNumber = Math.floor(Math.random() * 15);
-	getQuestion(randomNumber);
-	console.log(randomNumber);
+function getRandomQuestion() {
+	return Math.floor(Math.random() * 15);
 }
 
 function submitAnswer(e) {
-	_ui.ui.submitAnswer(globalIndex);
+	_ui.ui.submitAnswer(questionCount);
 	e.preventDefault();
 }
 
@@ -9159,16 +9166,15 @@ function submitNext(e) {
 	var answer = radioAnswer.querySelector('input[type=radio]:checked').value;
 
 	var nextText = document.querySelector('#next').innerHTML;
-	if (nextText === 'Finish') {
-		globalIndex = currentQuestionIndex++;
-		_ui.ui.countAnswers(globalIndex, answer);
+
+	currentQuestionIndex = currentQuestionIndex + 1;
+	questionCount = currentQuestionIndex;
+	if (questionCount === Number(numberQuestions)) {
+		_ui.ui.countAnswers(questionCount, answer);
 		_ui.ui.showResults();
 	} else {
-		globalIndex = currentQuestionIndex;
-		console.log(globalIndex);
-		_ui.ui.showNextQuestion(globalIndex);
-		_ui.ui.countAnswers(globalIndex, answer);
-		globalIndex = currentQuestionIndex++;
+		_ui.ui.countAnswers(questionCount, answer);
+		getQuestion(questionCount);
 	}
 
 	e.preventDefault();
@@ -9226,16 +9232,9 @@ var UI = function () {
 		this.left = 0;
 	}
 
-	// getQuestions(questions, userName = this.userName, numberQuestions) {
-	// 	this.questionsReceived = questions;
-	// 	this.total = numberQuestions;
-	// 	this.showQuestionBlock(userName);
-	// }
-
 	_createClass(UI, [{
 		key: 'showQuestionBlock',
-		value: function showQuestionBlock(questions, userName, numberQuestions) {
-			this.questionsReceived = questions;
+		value: function showQuestionBlock(userName, numberQuestions) {
 			this.total = numberQuestions;
 			this.userName = userName;
 
@@ -9260,8 +9259,6 @@ var UI = function () {
 
 			this.numberQuestionsTotal.innerHTML = this.total;
 			this.numberLeft.innerHTML = this.total;
-
-			this.showQuestion(this.questionsReceived, 0);
 		}
 	}, {
 		key: 'showAlert',
@@ -9301,6 +9298,7 @@ var UI = function () {
 	}, {
 		key: 'showQuestion',
 		value: function showQuestion(questions, currentQuestionIndex) {
+			this.questionsReceived = questions;
 			var output = '';
 
 			questions.filter(function (q, index) {
@@ -9380,8 +9378,6 @@ var UI = function () {
 				}
 			});
 			this.answers.push(currentQuestion);
-			console.log(currentQuestion);
-			console.log(this.answers);
 
 			this.done = this.done + 1;
 			this.left = this.total - this.done;

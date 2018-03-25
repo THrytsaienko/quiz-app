@@ -22,14 +22,7 @@ class UI {
 		this.left = 0;
 	}
 
-	// getQuestions(questions, userName = this.userName, numberQuestions) {
-	// 	this.questionsReceived = questions;
-	// 	this.total = numberQuestions;
-	// 	this.showQuestionBlock(userName);
-	// }
-
-	showQuestionBlock(questions, userName, numberQuestions) {
-		this.questionsReceived = questions;
+	showQuestionBlock(userName, numberQuestions) {
 		this.total = numberQuestions;
 		this.userName = userName;
 
@@ -54,8 +47,6 @@ class UI {
 
 		this.numberQuestionsTotal.innerHTML = this.total;
 		this.numberLeft.innerHTML = this.total;
-
-		this.showQuestion(this.questionsReceived, 0);
 	}
 
 	showAlert(message, classes) {
@@ -89,6 +80,7 @@ class UI {
 	}
 
 	showQuestion(questions, currentQuestionIndex) {
+		this.questionsReceived = questions;
 		let output = '';
 
 		questions.filter((q, index) => {
@@ -199,8 +191,6 @@ class UI {
 			}
 		});
 		this.answers.push(currentQuestion);
-		console.log(currentQuestion);
-		console.log(this.answers);
 
 		this.done = this.done + 1;
 		this.left = this.total - this.done;
