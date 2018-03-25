@@ -123,7 +123,7 @@ class UI {
 
 	submitAnswer(currentQuestionIndex) {
 		this.nextButton.classList.remove('disabled');
-		if (this.questionsReceived.length === currentQuestionIndex + 1) {
+		if (this.questionsReceived.length === this.total) {
 			this.nextButton.innerHTML = 'Finish';
 		}
 	}
