@@ -96,7 +96,7 @@ class UI {
 					<h5 class="card-title question">${q.question}</h5>
 					<div class="answers my-4">
 						<div class="custom-control custom-radio custom-control-inline">
-							<input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input answer" value="${q.answers[0]}">
+							<input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input answer" value="${q.answers[0]}" checked>
 							<label class="custom-control-label" for="customRadioInline1">${q.answers[0]}</label>
 						</div>
 							<div class="custom-control custom-radio custom-control-inline">
