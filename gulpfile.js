@@ -52,9 +52,9 @@ gulp.task('watch', function() {
 
 gulp.task('copy', function(){
 	return gulp.src([
-			'src/assets/**/*.{jpg,png,jpeg,gif}'
+			'src/img/*.{jpg,png,jpeg,gif}'
 		])
-		.pipe(gulp.dest('./docs/assets'))
+		.pipe(gulp.dest('./docs/assets/img'))
 });
 
 gulp.task('clean', function() {
